@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Convenios Empresariales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="convenios.css">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <nav class="main-nav">
+  <div class="nav-logo">🎓 Sistema UV</div>
+
+  <div class="nav-links">
+    <a href="../dashboard/index.html">🏠 Inicio</a>
+    <a href="../Sistema_Vinculacion/index.html">📘 Folios SS
+    <a href="../Sistema_Practicas/index.html">📘 Folios PF</a>
+    <a href="../Convenio_Empresas/convenios.html">🤝 Convenios</a>
+    <a href="../Sistema_Reportes/reportes.html">📊 Reportes</a>
+    <a href="../Sistema_Pendientes/Pendientes.html">📊 Pendientes</a>
+    <a href="../Vacantes_SS/vacantes.html">📢 Vacantes SS</a>
+    <a href="../Vacantes_PF/vacantespf.html">💼 Vacantes PF</a>
+    <a href="/Estudiantes/estudiantes.html">Alumnos 👥🏫</a>
+  </div>
+
+  <button id="logout">Salir</button>
+</nav>
+
+
+  <div class="container">
+    <header class="header">
+      <h1>🤝 Convenios Empresariales</h1>
+      <p class="subtitle">Gestión de Alianzas y Acuerdos de Colaboración</p>
+    </header>
+
+    <!-- Pestañas de navegación -->
+    <div class="tabs">
+        
+      <button class="tab-btn active" data-tab="nuevo">➕ Nuevo Convenio</button>
+      <button class="tab-btn" data-tab="lista">📋 Ver Convenios</button>
+      <button class="tab-btn" data-tab="estadisticas">📊 Estadísticas</button>
+    </div>
+
+    <!-- Pestaña: Nuevo Convenio -->
+    <div id="nuevo" class="tab-content active">
+      <form id="convenioForm">
+        <div class="form-row">
+          <div class="input-group">
+            <label>Nombre de la Empresa/Institución *</label>
+            <input type="text" id="nombreEmpresa" required placeholder="Ej: Tecnológica ABC S.A.">
+          </div>
+
+          <div class="input-group">
+            <label>Encargado de la Relación *</label>
+            <input type="text" id="encargado" required placeholder="Nombre del contacto principal">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Contacto (Teléfono/Correo) *</label>
+            <input type="text" id="contacto" required placeholder="tel@empresa.com / 123-456-7890">
+          </div>
+
+          <div class="input-group">
+            <label>Tipo de Convenio *</label>
+            <select id="tipoConvenio" required> 
+              <option value="Servicio Social">🤝 Servicio Social</option>
+              <option value="Prácticas Profesionales">💼 Prácticas Profesionales</option>
+              <option value="Ambas">✅ Ambas (Servicio Social y Prácticas)</option>
+            </select>
+            <small style="color: rgba(255,255,255,0.8); margin-top: 5px; display: block;">Mantén Ctrl/Cmd para seleccionar múltiples opciones</small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Número Máximo de Practicantes *</label>
+            <input type="number" id="maxPracticantes" required placeholder="Ej: 5" min="1">
+          </div>
+
+          <div class="input-group">
+            <label>Área de la UV Involucrada *</label>
+            <select id="areaUV" required>
+              <option value="">Selecciona un área</option>
+              <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+              <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+              <option value="Artes">Artes</option>
+              <option value="Biológico Agropecuarias">Biológico Agropecuarias</option>
+              <option value="Humanidades">Humanidades</option>
+              <option value="Técnica">Técnica</option>
+              <option value="Económico-Administrativa">Económico-Administrativa</option>
+              <option value="Todas las áreas">Todas las áreas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Objetivo de la Alianza *</label>
+          <textarea id="objetivo" rows="4" required placeholder="Describe el objetivo principal del convenio y los beneficios esperados..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Año de Inicio *</label>
+            <input type="number" id="anioInicio" required placeholder="Ej: 2024" min="2000" max="2100">
+          </div>
+
+          <div class="input-group">
+            <label>Año de Finalización *</label>
+            <input type="number" id="anioFin" required placeholder="Ej: 2027" min="2000" max="2100">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Vigencia *</label>
+            <select id="vigencia" required>
+              <option value="Vigente">🟢 Vigente</option>
+              <option value="Por vencer">🟡 Por vencer (menos de 6 meses)</option>
+              <option value="Vencido">🔴 Vencido</option>
+              <option value="En renovación">🔄 En renovación</option>
+              <option value="Suspendido">⏸️ Suspendido</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>Última Revisión de Contrato</label>
+            <input type="date" id="ultimaRevision">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Notas Adicionales</label>
+          <textarea id="notas" rows="3" placeholder="Información adicional, observaciones, contactos secundarios, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <span>💾 Guardar Convenio</span>
+        </button>
+      </form>
+      <p id="mensaje"></p>
+    </div>
+
+    <!-- Pestaña: Lista de Convenios -->
+    <div id="lista" class="tab-content">
+      <!-- Filtros y búsqueda -->
+      <div class="search-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="🔍 Buscar por empresa, encargado u objetivo...">
+        </div>
+        
+        <div class="filters">
+          <select id="filterTipo">
+            <option value="">Todos los tipos</option>
+            <option value="Servicio Social">🤝 Servicio Social</option>
+            <option value="Prácticas Profesionales">💼 Prácticas Profesionales</option>
+            <option value="Ambas">✅ Ambas</option>
+          </select>
+          
+          <select id="filterVigencia">
+            <option value="">Todas las vigencias</option>
+            <option value="Vigente">🟢 Vigente</option>
+            <option value="Por vencer">🟡 Por vencer</option>
+            <option value="Vencido">🔴 Vencido</option>
+            <option value="En renovación">🔄 En renovación</option>
+            <option value="Suspendido">⏸️ Suspendido</option>
+          </select>
+
+          <select id="filterArea">
+            <option value="">Todas las áreas</option>
+            <option value="Ciencias Administrativas">Ciencias Administrativas</option>
+            <option value="Ciencias de la Salud">Ciencias de la Salud</option>
+            <option value="Artes">Artes</option>
+            <option value="Biológico Agropecuarias">Biológico Agropecuarias</option>
+            <option value="Humanidades">Humanidades</option>
+            <option value="Técnica">Técnica</option>
+            <option value="Económico-Administrativa">Económico-Administrativa</option>
+            <option value="Todas las áreas">Todas las áreas</option>
+          </select>
+          
+          <select id="sortBy">
+            <option value="fecha-desc">Más recientes</option>
+            <option value="fecha-asc">Más antiguos</option>
+            <option value="nombre-asc">Empresa A-Z</option>
+            <option value="vigencia">Por vigencia</option>
+            <option value="anioFin">Por año finalización</option>
+          </select>
+        </div>
+
+        <!-- Alertas de convenios -->
+        <div class="alert-section" id="alertSection" style="display: none;">
+          <div class="alert-box">
+            <span class="alert-icon">⚠️</span>
+            <span class="alert-text" id="alertText"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contador -->
+      <div class="record-count">
+        <span id="recordCount">Cargando convenios...</span>
+      </div>
+
+      <!-- Lista de convenios -->
+      <div id="conveniosList" class="convenios-list">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Cargando convenios...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pestaña: Estadísticas -->
+    <div id="estadisticas" class="tab-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number" id="totalConvenios">0</div>
+          <div class="stat-label">Total de Convenios</div>
+        </div>
+
+        <div class="stat-card status-vigente">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-number" id="conveniosVigentes">0</div>
+          <div class="stat-label">Vigentes</div>
+        </div>
+
+        <div class="stat-card status-vencer">
+          <div class="stat-icon">🟡</div>
+          <div class="stat-number" id="conveniosPorVencer">0</div>
+          <div class="stat-label">Por Vencer</div>
+        </div>
+
+        <div class="stat-card status-vencido">
+          <div class="stat-icon">🔴</div>
+          <div class="stat-number" id="conveniosVencidos">0</div>
+          <div class="stat-label">Vencidos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🤝</div>
+          <div class="stat-number" id="conveniosServicio">0</div>
+          <div class="stat-label">Servicio Social</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">💼</div>
+          <div class="stat-number" id="conveniosPracticas">0</div>
+          <div class="stat-label">Prácticas Profesionales</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-number" id="totalPlazas">0</div>
+          <div class="stat-label">Plazas Totales</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🔄</div>
+          <div class="stat-number" id="conveniosRenovacion">0</div>
+          <div class="stat-label">En Renovación</div>
+        </div>
+      </div>
+
+      <!-- Gráfico de vigencia -->
+      <div class="chart-section">
+        <h3>Distribución por Vigencia</h3>
+        <div class="resolution-chart">
+          <div class="resolution-bar">
+            <div class="resolution-fill" id="vigenciaFill"></div>
+          </div>
+          <p class="resolution-text" id="vigenciaText">0% vigentes</p>
+        </div>
+      </div>
+
+      <!-- Distribución por área -->
+      <div class="chart-section">
+        <h3>Convenios por Área de la UV</h3>
+        <div id="areaChart" class="chart-container"></div>
+      </div>
+
+      <!-- Top empresas -->
+      <div class="chart-section">
+        <h3>Empresas con Más Plazas</h3>
+        <div id="empresasChart" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para ver/editar detalles -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Detalles del Convenio</h2>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="btnEditVigencia" class="btn-secondary">🔄 Cambiar Vigencia</button>
+        <button id="btnEdit" class="btn-secondary">✏️ Editar</button>
+        <button id="btnDelete" class="btn-danger">🗑️ Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para cambiar vigencia -->
+  <div id="vigenciaModal" class="modal">
+    <div class="modal-content modal-small">
+      <span class="close-vigencia">&times;</span>
+      <h2>Cambiar Vigencia</h2>
+      <div class="vigencia-options">
+        <button class="vigencia-btn vigente" data-vigencia="Vigente">
+          <span class="vigencia-icon">🟢</span>
+          <span class="vigencia-text">Vigente</span>
+        </button>
+        <button class="vigencia-btn porvencer" data-vigencia="Por vencer">
+          <span class="vigencia-icon">🟡</span>
+          <span class="vigencia-text">Por vencer</span>
+        </button>
+        <button class="vigencia-btn vencido" data-vigencia="Vencido">
+          <span class="vigencia-icon">🔴</span>
+          <span class="vigencia-text">Vencido</span>
+        </button>
+        <button class="vigencia-btn renovacion" data-vigencia="En renovación">
+          <span class="vigencia-icon">🔄</span>
+          <span class="vigencia-text">En renovación</span>
+        </button>
+        <button class="vigencia-btn suspendido" data-vigencia="Suspendido">
+          <span class="vigencia-icon">⏸️</span>
+          <span class="vigencia-text">Suspendido</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="convenios.js"></script>
+</body>
+</html>
