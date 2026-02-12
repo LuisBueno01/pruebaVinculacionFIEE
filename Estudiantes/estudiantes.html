@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Alumnos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/Estudiantes/estudiantes.css">
+</head>
+<body>
+
+  <!-- ==================== NAV GLOBAL ==================== -->
+  <nav class="main-nav">
+    <div class="nav-logo">🎓 Sistema UV</div>
+
+    <div class="nav-links">
+      <a href="../dashboard/index.html">🏠 Inicio</a>
+      <a href="../Sistema_Vinculacion/index.html">📘 Folios SS</a>
+      <a href="../Sistema_Practicas/index.html">💼 Folios PF</a>
+      <a href="../Convenio_Empresas/convenios.html">🤝 Convenios</a>
+      <a href="../Sistema_Reportes/reportes.html">📊 Reportes</a>
+      <a href="../Sistema_Pendientes/Pendientes.html">⏳ Pendientes</a>
+      <a href="../Vacantes_SS/vacantes.html">📢 Vacantes SS</a>
+      <a href="../Vacantes_PF/vacantespf.html">💼 Vacantes PF</a>
+      <a href="/Estudiantes/estudiantes.html">Alumnos 👥🏫</a>
+    </div>
+
+    <button id="logout">Salir</button>
+  </nav>
+
+  <div class="container">
+
+    <header class="header">
+      <h1>👥 Gestión de Alumnos</h1>
+      <p class="subtitle">Registro y seguimiento de estudiantes</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="nuevo">➕ Nuevo Alumno</button>
+      <button class="tab-btn" data-tab="lista">📋 Lista de Alumnos</button>
+      <button class="tab-btn" data-tab="estadisticas">📊 Estadísticas</button>
+    </div>
+
+    <!-- ==================== NUEVO ALUMNO ==================== -->
+    <div id="nuevo" class="tab-content active">
+      <form id="alumnoForm">
+
+        <h3 class="section-title">📝 Información Personal</h3>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Nombre Completo *</label>
+            <input type="text" id="nombreCompleto" required placeholder="Ej: Juan Pérez García">
+          </div>
+
+          <div class="input-group">
+            <label>Matrícula *</label>
+            <input type="text" id="matricula" required placeholder="Ej: S20012345">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Carrera *</label>
+            <select id="carrera" required>
+              <option value="">Seleccionar carrera</option>
+              <option value="Mecatronica">🤖 Ingeniería Mecatrónica</option>
+              <option value="Informatica">💻 Ingeniería Informática</option>
+              <option value="Electronica y Comunicaciones">📡 Ingeniería Electrónica y Comunicaciones</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>Semestre Actual *</label>
+            <input type="number" id="semestre" required min="1" max="12" placeholder="Ej: 6">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Promedio</label>
+            <input type="number" id="promedio" step="0.01" min="0" max="10" placeholder="Ej: 8.5">
+          </div>
+
+          <div class="input-group">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" id="fechaNacimiento">
+          </div>
+        </div>
+
+        <!-- INFORMACIÓN DE CONTACTO -->
+        <h3 class="section-title">📞 Información de Contacto</h3>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Correo Electrónico *</label>
+            <input type="email" id="email" required placeholder="ejemplo@estudiantes.uv.mx">
+          </div>
+
+          <div class="input-group">
+            <label>Teléfono *</label>
+            <input type="tel" id="telefono" required placeholder="2291234567">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Dirección</label>
+          <textarea id="direccion" rows="2" placeholder="Calle, número, colonia, ciudad"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Contacto de Emergencia (Nombre)</label>
+            <input type="text" id="emergenciaNombre" placeholder="Nombre del contacto">
+          </div>
+
+          <div class="input-group">
+            <label>Teléfono de Emergencia</label>
+            <input type="tel" id="emergenciaTelefono" placeholder="2291234567">
+          </div>
+        </div>
+
+        <!-- CV -->
+        <h3 class="section-title">📄 Curriculum Vitae</h3>
+
+        <div class="input-group">
+          <label>Subir CV (PDF)</label>
+          <div class="file-upload-area" id="cvUploadArea">
+            <input type="file" id="cvFile" accept=".pdf" style="display: none;">
+            <div class="upload-content">
+              📤 Click para seleccionar CV o arrastra el archivo aquí
+              <p class="upload-hint">Formato: PDF | Tamaño máximo: 5MB</p>
+            </div>
+          </div>
+          <div id="cvFileName" class="file-item" style="display: none;"></div>
+          <div class="upload-progress" id="cvProgress">
+            <div class="progress-indicator">
+              <div class="progress-bar" id="cvProgressBar"></div>
+            </div>
+            <p class="progress-text">Subiendo... <span id="cvProgressText">0%</span></p>
+          </div>
+        </div>
+
+        <!-- SERVICIO SOCIAL -->
+        <h3 class="section-title">📘 Servicio Social</h3>
+
+        <div class="input-group">
+          <label>¿Ya realizó Servicio Social?</label>
+          <select id="realizoSS">
+            <option value="No">❌ No</option>
+            <option value="En proceso">🔄 En proceso</option>
+            <option value="Completado">✅ Completado</option>
+          </select>
+        </div>
+
+        <div id="ssSection" class="conditional-section">
+          <div class="input-group">
+            <label>Empresa/Institución donde realizó SS *</label>
+            <input type="text" id="empresaSS" placeholder="Nombre de la empresa">
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label>Fecha de Inicio</label>
+              <input type="date" id="fechaInicioSS">
+            </div>
+
+            <div class="input-group">
+              <label>Fecha de Término</label>
+              <input type="date" id="fechaTerminoSS">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Horas Completadas</label>
+            <input type="number" id="horasSS" min="0" max="480" placeholder="Ej: 480">
+          </div>
+
+          <div class="input-group">
+            <label>Documentos de SS (PDFs)</label>
+            <div class="file-upload-area" id="ssUploadArea">
+              <input type="file" id="ssFiles" accept=".pdf" multiple style="display: none;">
+              <div class="upload-content">
+                📤 Click para seleccionar archivos o arrastra aquí
+                <p class="upload-hint">Puedes subir múltiples archivos | Formato: PDF | Tamaño máximo: 5MB c/u</p>
+              </div>
+            </div>
+            <div id="ssFilesList"></div>
+            <div class="upload-progress" id="ssProgress">
+              <div class="progress-indicator">
+                <div class="progress-bar" id="ssProgressBar"></div>
+              </div>
+              <p class="progress-text">Subiendo... <span id="ssProgressText">0%</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRÁCTICAS PROFESIONALES -->
+        <h3 class="section-title">💼 Prácticas Profesionales</h3>
+
+        <div class="input-group">
+          <label>¿Ya realizó Prácticas Profesionales?</label>
+          <select id="realizoPP">
+            <option value="No">❌ No</option>
+            <option value="En proceso">🔄 En proceso</option>
+            <option value="Completado">✅ Completado</option>
+          </select>
+        </div>
+
+        <div id="ppSection" class="conditional-section">
+          <div class="input-group">
+            <label>Empresa donde realizó PP *</label>
+            <input type="text" id="empresaPP" placeholder="Nombre de la empresa">
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label>Fecha de Inicio</label>
+              <input type="date" id="fechaInicioPP">
+            </div>
+
+            <div class="input-group">
+              <label>Fecha de Término</label>
+              <input type="date" id="fechaTerminoPP">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Área/Departamento</label>
+            <input type="text" id="areaPP" placeholder="Ej: Desarrollo de Software">
+          </div>
+
+          <div class="input-group">
+            <label>Documentos de PP (PDFs)</label>
+            <div class="file-upload-area" id="ppUploadArea">
+              <input type="file" id="ppFiles" accept=".pdf" multiple style="display: none;">
+              <div class="upload-content">
+                📤 Click para seleccionar archivos o arrastra aquí
+                <p class="upload-hint">Puedes subir múltiples archivos | Formato: PDF | Tamaño máximo: 5MB c/u</p>
+              </div>
+            </div>
+            <div id="ppFilesList"></div>
+            <div class="upload-progress" id="ppProgress">
+              <div class="progress-indicator">
+                <div class="progress-bar" id="ppProgressBar"></div>
+              </div>
+              <p class="progress-text">Subiendo... <span id="ppProgressText">0%</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFORMACIÓN ADICIONAL -->
+        <h3 class="section-title">📝 Información Adicional</h3>
+
+        <div class="input-group">
+          <label>Habilidades y Competencias</label>
+          <textarea id="habilidades" rows="3" placeholder="Ej: Python, JavaScript, Trabajo en equipo, etc."></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Idiomas</label>
+          <textarea id="idiomas" rows="2" placeholder="Ej: Español (nativo), Inglés (intermedio)"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Notas</label>
+          <textarea id="notas" rows="3" placeholder="Cualquier información adicional relevante"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-submit">
+          💾 Guardar Alumno
+        </button>
+
+      </form>
+    </div>
+
+    <!-- ==================== LISTA ==================== -->
+    <div id="lista" class="tab-content">
+      
+      <div class="search-filter-bar">
+        <div class="filter-row">
+          <input type="text" id="filtroNombre" placeholder="🔍 Buscar por nombre o matrícula...">
+          
+          <select id="filtroCarrera">
+            <option value="">Todas las carreras</option>
+            <option value="Mecatronica">🤖 Mecatrónica</option>
+            <option value="Informatica">💻 Informática</option>
+            <option value="Electronica y Comunicaciones">📡 Electrónica y Comunicaciones</option>
+          </select>
+
+          <select id="filtroSS">
+            <option value="">Servicio Social (Todos)</option>
+            <option value="No">❌ No realizado</option>
+            <option value="En proceso">🔄 En proceso</option>
+            <option value="Completado">✅ Completado</option>
+          </select>
+
+          <select id="filtroPP">
+            <option value="">Prácticas Prof. (Todos)</option>
+            <option value="No">❌ No realizado</option>
+            <option value="En proceso">🔄 En proceso</option>
+            <option value="Completado">✅ Completado</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn-secondary" onclick="limpiarFiltros()">
+            🔄 Limpiar Filtros
+          </button>
+          <span class="filter-count">
+            Mostrando <strong id="countFiltrados">0</strong> de <strong id="countTotal">0</strong> alumnos
+          </span>
+        </div>
+      </div>
+
+      <div id="alumnosList"></div>
+    </div>
+
+    <!-- ==================== ESTADÍSTICAS ==================== -->
+    <div id="estadisticas" class="tab-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalAlumnos">0</div>
+          <div class="stat-label">Total Alumnos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="alumnosSS">0</div>
+          <div class="stat-label">Con SS Completado</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="alumnosPP">0</div>
+          <div class="stat-label">Con PP Completado</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="promedioGeneral">0</div>
+          <div class="stat-label">Promedio General</div>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-card">
+          <h3>📊 Alumnos por Carrera</h3>
+          <div id="chartCarreras"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>📘 Estado del Servicio Social</h3>
+          <div id="chartSS"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>💼 Estado de Prácticas Profesionales</h3>
+          <div id="chartPP"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="estudiantes.js"></script>
+
+</body>
+</html>
