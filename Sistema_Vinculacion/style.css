@@ -1,0 +1,393 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==================== BODY ==================== */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    radial-gradient(circle at 20% 30%, #8ec5fc 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, #e0c3fc 0%, transparent 40%),
+    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: rgb(0, 0, 0);
+}
+
+/* ==================== CONTAINER ==================== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  animation: fadeIn 0.6s ease-in;
+}
+
+/* ==================== ANIMACIONES ==================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== HEADER ==================== */
+
+.header {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.header h1 {
+  font-size: 2.2em;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  opacity: 0.8;
+}
+
+/* ==================== TABS ==================== */
+
+.tabs {
+  display: flex;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 15px;
+  background: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.tab-btn.active {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ==================== TAB CONTENT ==================== */
+
+.tab-content {
+  display: none;
+  padding: 40px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ==================== INPUTS ==================== */
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.input-group input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.25);
+}
+
+/* ==================== BOTONES ==================== */
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  color: white;
+}
+
+.btn-primary {
+  background: rgba(59,130,246,0.3);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.2);
+}
+
+.btn-danger {
+  background: rgba(239,68,68,0.4);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.35);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* ==================== BUSCADOR ==================== */
+
+.search-panel {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 15px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.search-input input {
+  border: none;
+  background: transparent;
+  color: rgb(3, 3, 3);
+  width: 100%;
+  outline: none;
+}
+
+.search-filters select {
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: rgb(0, 0, 0);
+}
+
+/* ==================== CONTADOR ==================== */
+
+.record-count {
+  font-size: 14px;
+  opacity: 0.8;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+/* ==================== REGISTROS ==================== */
+
+.registros-list {
+  display: grid;
+  gap: 15px;
+}
+
+.registro-item {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(15px);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.registro-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.registro-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.registro-folio {
+  font-weight: bold;
+}
+
+.registro-fecha {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/* ==================== ESTADÍSTICAS ==================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.stat-label {
+  opacity: 0.8;
+}
+
+/* ==================== MODAL ==================== */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+.modal-content {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(25px);
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab-content {
+    padding: 25px;
+  }
+
+  .search-panel {
+    flex-direction: column;
+  }
+}
+
+/* SELECT TEXTO NEGRO */
+.input-group select {
+  color: #111;
+}
+
+/* Opciones del desplegable */
+.input-group select option {
+  color: #111;
+  background: white;
+}
+/*--- barra de navegacion  */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  margin-bottom: 25px;
+
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.nav-logo {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: #111;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Hover */
+#logout:hover {
+  background: rgba(239, 83, 80, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Active */
+#logout:active {
+  transform: scale(0.96);
+}

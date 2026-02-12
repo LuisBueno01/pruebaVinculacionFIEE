@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Folios Servicio Social</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== NAV GLOBAL ==================== -->
+  <nav class="main-nav">
+    <div class="nav-logo">🎓 Sistema UV</div>
+
+    <div class="nav-links">
+      <a href="../dashboard/index.html">🏠 Inicio</a>
+      <a href="../Sistema_Vinculacion/index.html">📘 Folios SS</a>
+      <a href="../Sistema_Practicas/index.html">💼 Folios PF</a>
+      <a href="../Convenio_Empresas/convenios.html">🤝 Convenios</a>
+      <a href="../Sistema_Reportes/reportes.html">📊 Reportes</a>
+      <a href="../Sistema_Pendientes/Pendientes.html">⏳ Pendientes</a>
+      <a href="../Vacantes_SS/vacantes.html">📢 Vacantes SS</a>
+      <a href="../Vacantes_PF/vacantespf.html">💼 Vacantes PF</a>
+      <a href="/Estudiantes/estudiantes.html">Alumnos 👥🏫</a>
+    </div>
+
+    <button id="logout">Salir</button>
+  </nav>
+
+  <!-- ==================== CONTENEDOR PRINCIPAL ==================== -->
+  <div class="container">
+
+    <!-- HEADER DEL MÓDULO -->
+    <header class="header">
+      <h1>📘 Folios Servicio Social</h1>
+      <p class="subtitle">Sistema de Gestión de Registros</p>
+    </header>
+
+    <!-- ==================== PESTAÑAS ==================== -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="registro">➕ Nuevo Registro</button>
+      <button class="tab-btn" data-tab="lista">📋 Ver Registros</button>
+      <button class="tab-btn" data-tab="estadisticas">📊 Estadísticas</button>
+    </div>
+
+    <!-- ==================== REGISTRO ==================== -->
+    <div id="registro" class="tab-content active">
+      <form id="folioForm">
+
+        <div class="input-group">
+          <label>Folio</label>
+          <input type="text" id="folio" required placeholder="Ej. 2024-001">
+        </div>
+
+        <div class="input-group">
+          <label>Nombre</label>
+          <input type="text" id="nombre" required placeholder="Nombre completo">
+        </div>
+
+        <div class="input-group">
+          <label>Jefe / Dependencia</label>
+          <input type="text" id="dependencia" required placeholder="Dependencia">
+        </div>
+
+        <div class="input-group">
+          <label>Carrera</label>
+          <select id="carrera" required>
+            <option value="">Selecciona una carrera</option>
+            <option value="Informatica">💻 Informática</option>
+            <option value="Mecatronica">🤖 Mecatrónica</option>
+            <option value="Electronica y Comunicaciones">📡 Electrónica y Comunicaciones</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          💾 Guardar Folio
+        </button>
+
+      </form>
+
+      <p id="mensaje"></p>
+    </div>
+
+    <!-- ==================== LISTA ==================== -->
+    <div id="lista" class="tab-content">
+
+      <div class="search-panel">
+        <div class="search-input">
+          <span class="icon">🔍</span>
+          <input type="text" id="searchInput"
+            placeholder="Buscar folio, nombre o carrera...">
+        </div>
+
+        <div class="search-filters">
+          <select id="filterCarrera">
+            <option value="">Todas las carreras</option>
+          </select>
+
+          <select id="sortBy">
+            <option value="fecha-desc">Más recientes</option>
+            <option value="fecha-asc">Más antiguos</option>
+            <option value="nombre-asc">Nombre A–Z</option>
+            <option value="nombre-desc">Nombre Z–A</option>
+            <option value="folio-asc">Folio A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="record-count">
+        <span id="recordCount">Cargando registros...</span>
+      </div>
+
+      <div id="registrosList" class="registros-list"></div>
+    </div>
+
+    <!-- ==================== ESTADÍSTICAS ==================== -->
+    <div id="estadisticas" class="tab-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalRegistros">0</div>
+          <div class="stat-label">Total de registros</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="totalCarreras">0</div>
+          <div class="stat-label">Carreras distintas</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="totalDependencias">0</div>
+          <div class="stat-label">Dependencias</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== MODAL ==================== -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Detalles del Registro</h2>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="btnEdit" class="btn-secondary">✏️ Editar</button>
+        <button id="btnDelete" class="btn-danger">🗑️ Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>
