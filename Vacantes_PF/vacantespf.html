@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vacantes Prácticas Profesionales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/Vacantes_PF/vacantespf.css">
+</head>
+<body>
+
+  <!-- ==================== NAV GLOBAL ==================== -->
+  <nav class="main-nav">
+    <div class="nav-logo">🎓 Sistema UV</div>
+
+    <div class="nav-links">
+      <a href="../dashboard/index.html">🏠 Inicio</a>
+      <a href="../Sistema_Vinculacion/index.html">📘 Folios SS</a>
+      <a href="../Sistema_Practicas/index.html">💼 Folios PF</a>
+      <a href="../Convenio_Empresas/convenios.html">🤝 Convenios</a>
+      <a href="../Sistema_Reportes/reportes.html">📊 Reportes</a>
+      <a href="../Sistema_Pendientes/Pendientes.html">⏳ Pendientes</a>
+      <a href="../Vacantes_SS/vacantes.html">📢 Vacantes SS</a>
+      <a href="../Vacantes_PF/vacantespf.html">💼 Vacantes PF</a>
+      <a href="/Estudiantes/estudiantes.html">Alumnos 👥🏫</a>
+    </div>
+
+    <button id="logout">Salir</button>
+  </nav>
+
+  <div class="container">
+
+    <header class="header">
+      <h1>💼 Vacantes Prácticas Profesionales</h1>
+      <p class="subtitle">Gestión de ofertas de prácticas para estudiantes</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="nuevo">➕ Nueva Vacante</button>
+      <button class="tab-btn" data-tab="lista">📋 Ver Vacantes</button>
+      <button class="tab-btn" data-tab="estadisticas">📊 Estadísticas</button>
+    </div>
+
+    <!-- ==================== NUEVA VACANTE ==================== -->
+    <div id="nuevo" class="tab-content active">
+      <form id="vacanteForm">
+
+        <div class="input-group">
+          <label>Empresa *</label>
+          <input type="text" id="empresa" required>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Vacantes ofertadas *</label>
+            <input type="number" id="vacantes" required min="1">
+          </div>
+
+          <div class="input-group">
+            <label>Modalidad</label>
+            <select id="modalidad">
+              <option value="Presencial">🏢 Presencial</option>
+              <option value="Remoto">💻 Remoto</option>
+              <option value="Híbrido">🔄 Híbrido</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Carreras que pueden postular *</label>
+
+          <div class="checkbox-group">
+            <label class="check-item">
+              <input type="checkbox" value="Mecatronica" class="carrera-check">
+              🤖 Mecatrónica
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" value="Informatica" class="carrera-check">
+              💻 Informática
+            </label>
+
+            <label class="check-item">
+              <input type="checkbox" value="Electronica y Comunicaciones" class="carrera-check">
+              📡 Electrónica y Comunicaciones
+            </label>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>¿Tiene convenio vigente?</label>
+          <select id="tieneConvenio">
+            <option value="No">❌ No</option>
+            <option value="Si">✅ Sí</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Convenio relacionado</label>
+          <select id="convenioRelacionado">
+            <option value="">Seleccionar convenio</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Área/Departamento</label>
+          <input type="text" id="area" placeholder="Ej: Desarrollo de Software, Mantenimiento, etc.">
+        </div>
+
+        <div class="input-group">
+          <label>Qué ofrece *</label>
+          <textarea id="ofrece" rows="3" required placeholder="Ej: Apoyo económico, capacitación, proyecto real, etc."></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Requisitos *</label>
+          <textarea id="requisitos" rows="3" required placeholder="Ej: Promedio mínimo, conocimientos específicos, disponibilidad, etc."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Semestre mínimo</label>
+            <input type="number" id="semestreMin" min="1" max="12" placeholder="Ej: 7">
+          </div>
+
+          <div class="input-group">
+            <label>Duración (meses)</label>
+            <input type="number" id="duracionMeses" min="1" max="12" placeholder="Ej: 6">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Horario</label>
+            <input type="text" id="horario" placeholder="Ej: Lun-Vie 9am-2pm">
+          </div>
+
+          <div class="input-group">
+            <label>Fecha límite</label>
+            <input type="date" id="fechaLimite">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Apoyo económico mensual (opcional)</label>
+          <input type="number" id="apoyoEconomico" min="0" step="0.01" placeholder="Ej: 3000">
+        </div>
+
+        <div class="input-group">
+          <label>Estatus</label>
+          <select id="estatus">
+            <option value="Disponible">🟢 Disponible</option>
+            <option value="En revisión">🟡 En revisión</option>
+            <option value="Cerrada">🔴 Cerrada</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          💾 Guardar Vacante
+        </button>
+
+      </form>
+    </div>
+
+    <!-- ==================== LISTA ==================== -->
+    <div id="lista" class="tab-content">
+      <div class="filter-bar">
+        <input type="text" id="filtroEmpresa" placeholder="🔍 Buscar por empresa...">
+        <select id="filtroEstatus">
+          <option value="">Todos los estatus</option>
+          <option value="Disponible">🟢 Disponible</option>
+          <option value="En revisión">🟡 En revisión</option>
+          <option value="Cerrada">🔴 Cerrada</option>
+        </select>
+        <select id="filtroCarrera">
+          <option value="">Todas las carreras</option>
+          <option value="Mecatronica">🤖 Mecatrónica</option>
+          <option value="Informatica">💻 Informática</option>
+          <option value="Electronica y Comunicaciones">📡 Electrónica y Comunicaciones</option>
+        </select>
+      </div>
+      <div id="vacantesList" class="vacantes-list"></div>
+    </div>
+
+    <!-- ==================== ESTADÍSTICAS ==================== -->
+    <div id="estadisticas" class="tab-content">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="totalVacantes">0</div>
+          <div class="stat-label">Total Vacantes</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="vacantesDisponibles">0</div>
+          <div class="stat-label">Disponibles</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="vacantesConConvenio">0</div>
+          <div class="stat-label">Con Convenio</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number" id="totalPlazas">0</div>
+          <div class="stat-label">Total de Plazas</div>
+        </div>
+      </div>
+
+      <div class="charts-container">
+        <div class="chart-card">
+          <h3>📊 Vacantes por Carrera</h3>
+          <div id="chartCarreras"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>📍 Vacantes por Modalidad</h3>
+          <div id="chartModalidad"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="vacantespf.js"></script>
+
+</body>
+</html>
