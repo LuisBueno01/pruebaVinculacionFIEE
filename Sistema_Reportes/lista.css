@@ -1,0 +1,62 @@
+body {
+  background: #f1f8ff;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  text-decoration: none;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+.filters {
+  margin: 15px 0;
+}
+
+select, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #90caf9;
+  margin-bottom: 10px;
+}
+
+.reporte-card {
+  background: white;
+  padding: 15px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border-left: 6px solid #90caf9;
+  cursor: pointer;
+}
+
+.reporte-card.recibido { border-color: #fbc02d; }
+.reporte-card.atencion { border-color: #1976d2; }
+.reporte-card.resuelto { border-color: #2e7d32; }
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background: white;
+  max-width: 600px;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 16px;
+}

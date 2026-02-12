@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reportes de Atención</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="reportes.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- ==================== NAV GLOBAL ==================== -->
+  <nav class="main-nav">
+    <div class="nav-logo">🎓 Sistema UV</div>
+
+    <div class="nav-links">
+      <a href="../dashboard/index.html">🏠 Inicio</a>
+      <a href="../Sistema_Vinculacion/index.html">📘 Folios SS</a>
+      <a href="../Sistema_Practicas/index.html">💼 Folios PF</a>
+      <a href="../Convenio_Empresas/convenios.html">🤝 Convenios</a>
+      <a href="../Sistema_Reportes/reportes.html">📊 Reportes</a>
+      <a href="../Sistema_Pendientes/Pendientes.html">⏳ Pendientes</a>
+      <a href="../Vacantes_SS/vacantes.html">📢 Vacantes SS</a>
+      <a href="../Vacantes_PF/vacantespf.html">💼 Vacantes PF</a>
+      <a href="/Estudiantes/estudiantes.html">Alumnos 👥🏫</a>
+    </div>
+
+    <button id="logout">Salir</button>
+  </nav>
+
+  <!-- ==================== CONTENEDOR PRINCIPAL ==================== -->
+  <div class="container">
+
+    <!-- HEADER DEL MÓDULO -->
+    <header class="header">
+      <h1>📝 Reportes de Atención</h1>
+      <p class="subtitle">Sistema de Gestión y Seguimiento</p>
+    </header>
+
+    <!-- ==================== PESTAÑAS ==================== -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="nuevo">➕ Nuevo Reporte</button>
+      <button class="tab-btn" data-tab="lista">📋 Ver Reportes</button>
+      <button class="tab-btn" data-tab="estadisticas">📊 Estadísticas</button>
+    </div>
+
+    <!-- ==================== NUEVO REPORTE ==================== -->
+    <div id="nuevo" class="tab-content active">
+      <form id="reporteForm">
+
+        <div class="input-group">
+          <label>Nombre de la persona *</label>
+          <input type="text" id="nombre" required placeholder="Nombre completo">
+        </div>
+
+        <div class="input-group">
+          <label>Tipo de reporte *</label>
+          <select id="tipo" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Empresa">🏢 Empresa</option>
+            <option value="Alumno">🎓 Alumno</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Teléfono o correo electrónico *</label>
+          <input type="text" id="contacto" required placeholder="Teléfono o email">
+        </div>
+
+        <div class="input-group">
+          <label>Detalles del problema *</label>
+          <textarea id="detalles" rows="5" required placeholder="Describe el problema o solicitud..."></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Estatus inicial *</label>
+          <select id="estatus" required>
+            <option value="Recibido">🟡 Recibido</option>
+            <option value="En atención">🔵 En atención</option>
+            <option value="Resuelto">🟢 Resuelto</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Prioridad</label>
+          <select id="prioridad">
+            <option value="Baja">🟢 Baja</option>
+            <option value="Media" selected>🟡 Media</option>
+            <option value="Alta">🔴 Alta</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          📤 Guardar Reporte
+        </button>
+
+      </form>
+
+      <p id="mensaje"></p>
+    </div>
+
+    <!-- ==================== LISTA ==================== -->
+    <div id="lista" class="tab-content">
+
+      <div class="search-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput"
+            placeholder="🔍 Buscar por nombre, tipo o detalles...">
+        </div>
+
+        <div class="filters">
+          <select id="filterTipo">
+            <option value="">Todos los tipos</option>
+            <option value="Empresa">🏢 Empresa</option>
+            <option value="Alumno">🎓 Alumno</option>
+          </select>
+
+          <select id="filterEstatus">
+            <option value="">Todos los estatus</option>
+            <option value="Recibido">🟡 Recibido</option>
+            <option value="En atención">🔵 En atención</option>
+            <option value="Resuelto">🟢 Resuelto</option>
+          </select>
+
+          <select id="filterPrioridad">
+            <option value="">Todas las prioridades</option>
+            <option value="Alta">🔴 Alta</option>
+            <option value="Media">🟡 Media</option>
+            <option value="Baja">🟢 Baja</option>
+          </select>
+
+          <select id="sortBy">
+            <option value="fecha-desc">Más recientes</option>
+            <option value="fecha-asc">Más antiguos</option>
+            <option value="prioridad">Por prioridad</option>
+            <option value="nombre-asc">Nombre A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="record-count">
+        <span id="recordCount">Cargando reportes...</span>
+      </div>
+
+      <div id="reportesList" class="reportes-list">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Cargando reportes...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ESTADÍSTICAS ==================== -->
+    <div id="estadisticas" class="tab-content">
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number" id="totalReportes">0</div>
+          <div class="stat-label">Total de Reportes</div>
+        </div>
+
+        <div class="stat-card status-recibido">
+          <div class="stat-icon">🟡</div>
+          <div class="stat-number" id="reportesRecibidos">0</div>
+          <div class="stat-label">Recibidos</div>
+        </div>
+
+        <div class="stat-card status-atencion">
+          <div class="stat-icon">🔵</div>
+          <div class="stat-number" id="reportesAtencion">0</div>
+          <div class="stat-label">En Atención</div>
+        </div>
+
+        <div class="stat-card status-resuelto">
+          <div class="stat-icon">🟢</div>
+          <div class="stat-number" id="reportesResueltos">0</div>
+          <div class="stat-label">Resueltos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-number" id="reportesEmpresa">0</div>
+          <div class="stat-label">Empresas</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-number" id="reportesAlumno">0</div>
+          <div class="stat-label">Alumnos</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">🔴</div>
+          <div class="stat-number" id="reportesPrioridadAlta">0</div>
+          <div class="stat-label">Alta Prioridad</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number" id="reportesHoy">0</div>
+          <div class="stat-label">Hoy</div>
+        </div>
+      </div>
+
+      <!-- Gráfico -->
+      <div class="chart-section">
+        <h3>Tasa de Resolución</h3>
+        <div class="resolution-chart">
+          <div class="resolution-bar">
+            <div class="resolution-fill" id="resolutionFill"></div>
+          </div>
+          <p class="resolution-text" id="resolutionText">0% resueltos</p>
+        </div>
+      </div>
+
+      <div class="chart-section">
+        <h3>Distribución por Prioridad</h3>
+        <div id="prioridadChart" class="chart-container"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODALES ==================== -->
+
+  <!-- Modal principal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Detalles del Reporte</h2>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="btnEditEstatus" class="btn-secondary">🔄 Cambiar Estatus</button>
+        <button id="btnEdit" class="btn-secondary">✏️ Editar</button>
+        <button id="btnDelete" class="btn-danger">🗑️ Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cambio rápido -->
+  <div id="estatusModal" class="modal">
+    <div class="modal-content modal-small">
+      <span class="close-estatus">&times;</span>
+      <h2>Cambiar Estatus</h2>
+      <div class="estatus-options">
+        <button class="estatus-btn recibido" data-estatus="Recibido">🟡 Recibido</button>
+        <button class="estatus-btn atencion" data-estatus="En atención">🔵 En atención</button>
+        <button class="estatus-btn resuelto" data-estatus="Resuelto">🟢 Resuelto</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="reportes.js"></script>
+
+</body>
+</html>

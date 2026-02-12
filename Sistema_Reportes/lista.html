@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Reportes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="lista.css">
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>📋 Reportes Registrados</h1>
+    <a href="reportes.html" class="link">➕ Nuevo reporte</a>
+  </header>
+
+  <div class="filters">
+    <select id="filterEstatus">
+      <option value="">Todos los estatus</option>
+      <option value="Recibido">🟡 Recibido</option>
+      <option value="En atención">🔵 En atención</option>
+      <option value="Resuelto">🟢 Resuelto</option>
+    </select>
+  </div>
+
+  <div id="reportesList"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <h2>Detalle del Reporte</h2>
+
+    <div id="detalleReporte"></div>
+
+    <hr>
+
+    <h3>Actualizar estatus</h3>
+    <select id="nuevoEstatus">
+      <option value="Recibido">🟡 Recibido</option>
+      <option value="En atención">🔵 En atención</option>
+      <option value="Resuelto">🟢 Resuelto</option>
+    </select>
+
+    <textarea id="observacion" placeholder="Agregar observación..."></textarea>
+
+    <button id="btnActualizar">💾 Guardar actualización</button>
+
+    <h3>Historial</h3>
+    <div id="historial"></div>
+  </div>
+</div>
+
+<script type="module" src="lista.js"></script>
+</body>
+</html>
