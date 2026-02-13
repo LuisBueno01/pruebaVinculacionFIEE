@@ -2,12 +2,12 @@
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_MESSAGING_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyCU14BKyvxP-s8Ipq6pVv3N4XJ9FuBi1FQ",
+  authDomain: "servicio-social-b80cf.firebaseapp.com",
+  projectId: "servicio-social-b80cf",
+  storageBucket: "servicio-social-b80cf.appspot.com",
+  messagingSenderId: "350748918799",
+  appId: "1:350748918799:web:8989549ab3a5ad7612cf7a"
 };
 
 // Inicializar Firebase
